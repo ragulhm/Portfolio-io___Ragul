@@ -18,49 +18,88 @@ class GlobeScene {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.container.appendChild(this.renderer.domElement);
 
+        // Mouse tracking
+        this.mouse = { x: 0, y: 0 };
+        this.targetMouse = { x: 0, y: 0 };
+        window.addEventListener('mousemove', (e) => {
+            this.targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            this.targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
         // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
         this.scene.add(ambientLight);
 
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(10, 10, 5);
-        this.scene.add(dirLight);
-
-        const pointLight1 = new THREE.PointLight(0xE0AAFF, 0.4);
-        pointLight1.position.set(-5, -5, -5);
+        const pointLight1 = new THREE.PointLight(0xE0AAFF, 0.8);
+        pointLight1.position.set(-5, 5, 5);
         this.scene.add(pointLight1);
 
-        const pointLight2 = new THREE.PointLight(0x9D4EDD, 0.3);
-        pointLight2.position.set(5, 5, 10);
+        const pointLight2 = new THREE.PointLight(0x9D4EDD, 0.6);
+        pointLight2.position.set(5, -5, 5);
         this.scene.add(pointLight2);
 
-        // Materials setup
-        const knotMaterial = new THREE.MeshStandardMaterial({
+        // 1. The Core Orb (Icosahedron)
+        const orbGeom = new THREE.IcosahedronGeometry(1.5, 1);
+        const orbMat = new THREE.MeshStandardMaterial({
             color: 0x7B2CBF,
-            roughness: 0.2,
-            metalness: 0.9,
-            emissive: 0x4a1080,
-            emissiveIntensity: 0.3
+            roughness: 0.1,
+            metalness: 0.8,
+            emissive: 0x3c096c,
+            emissiveIntensity: 0.4,
+            flatShading: true
         });
+        this.orb = new THREE.Mesh(orbGeom, orbMat);
 
-        // The central animated sphere (torus knot proxy)
-        const knotGeometry = new THREE.TorusKnotGeometry(1, 0.35, 128, 32, 2, 3);
-        this.knot = new THREE.Mesh(knotGeometry, knotMaterial);
-        this.knot.scale.set(2.2, 2.2, 2.2);
-        
-        // The outer glowing orb
-        const glowGeometry = new THREE.SphereGeometry(1, 32, 32);
-        const glowMaterial = new THREE.MeshBasicMaterial({
-            color: 0x7B2CBF,
+        // 2. The Holographic Wireframe
+        const wireGeom = new THREE.IcosahedronGeometry(1.52, 1);
+        const wireMat = new THREE.MeshBasicMaterial({
+            color: 0xC77DFF,
+            wireframe: true,
             transparent: true,
-            opacity: 0.04
+            opacity: 0.2
         });
-        this.glow = new THREE.Mesh(glowGeometry, glowMaterial);
-        this.glow.scale.set(3.5, 3.5, 3.5);
+        this.wireframe = new THREE.Mesh(wireGeom, wireMat);
+        this.orb.add(this.wireframe);
 
-        // Group to float
+        // 3. Particle Nebula
+        const particleCount = 1500;
+        const particleGeom = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        
+        for (let i = 0; i < particleCount; i++) {
+            const r = 3 + Math.random() * 3;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            
+            positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+            positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+            positions[i * 3 + 2] = r * Math.cos(phi);
+        }
+        
+        particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xE0AAFF,
+            size: 0.015,
+            transparent: true,
+            opacity: 0.5,
+            sizeAttenuation: true
+        });
+        this.particles = new THREE.Points(particleGeom, particleMat);
+
+        // 4. Glow Atmosphere
+        const glowGeom = new THREE.SphereGeometry(1.5, 32, 32);
+        const glowMat = new THREE.MeshBasicMaterial({
+            color: 0x9D4EDD,
+            transparent: true,
+            opacity: 0.05
+        });
+        this.glow = new THREE.Mesh(glowGeom, glowMat);
+        this.glow.scale.set(1.4, 1.4, 1.4);
+
+        // Grouping
         this.group = new THREE.Group();
-        this.group.add(this.knot);
+        this.group.add(this.orb);
+        this.group.add(this.particles);
         this.group.add(this.glow);
         this.scene.add(this.group);
 
@@ -84,21 +123,39 @@ class GlobeScene {
 
         const t = this.clock.getElapsedTime();
 
-        // Rotate knot
-        if (this.knot) {
-            this.knot.rotation.x = t * 0.15;
-            this.knot.rotation.y = t * 0.2;
+        // Smooth mouse parallax
+        this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.05;
+        this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.05;
+
+        // Rotate orb and wireframe
+        if (this.orb) {
+            this.orb.rotation.y = t * 0.15;
+            this.orb.rotation.z = t * 0.1;
+            
+            // Mouse influence
+            this.orb.rotation.x = this.mouse.y * 0.5;
+            this.orb.rotation.y += this.mouse.x * 0.5;
         }
 
-        // Pulse glow
+        if (this.wireframe) {
+            this.wireframe.rotation.y = -t * 0.2;
+        }
+
+        // Rotate particles
+        if (this.particles) {
+            this.particles.rotation.y = t * 0.05;
+            this.particles.rotation.x = t * 0.02;
+        }
+
+        // Pulse glow and particles opacity
         if (this.glow) {
-            const scale = 3.5 * (1 + Math.sin(t * 0.8) * 0.1);
-            this.glow.scale.set(scale, scale, scale);
+            this.glow.scale.setScalar(1.4 + Math.sin(t * 0.5) * 0.05);
         }
 
         // Float entire group
         if (this.group) {
-            this.group.position.y = Math.sin(t * 1.5) * 0.2;
+            this.group.position.y = Math.sin(t * 0.5) * 0.15;
+            this.group.position.x = Math.cos(t * 0.3) * 0.1;
         }
 
         this.renderer.render(this.scene, this.camera);

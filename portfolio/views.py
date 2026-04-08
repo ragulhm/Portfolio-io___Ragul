@@ -61,6 +61,16 @@ def index(request):
             "codeLink": "https://github.com/ragulhm/nebula-dev-hub",
             "status": "live",
             "gridSpan": 1
+        },
+        {
+            "title": "StockScope Elite: Obsidian Monolith",
+            "description": "High-performance asynchronous financial dashboard providing real-time market telemetry and neural sentiment analysis of global financial news.",
+            "technologies": ["FastAPI", "yfinance", "VaderSentiment", "Redis", "MongoDB", "JWT"],
+            "features": ["Zero-Latency Telemetry", "Neural Sentiment Analysis", "Fail-Safe Identity Node", "Asynchronous Market Ingestion"],
+            "demoLink": "",
+            "codeLink": "https://github.com/ragulhm/News_Stack_Analysis_System",
+            "status": "source-only",
+            "gridSpan": 1
         }
     ]
 
