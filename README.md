@@ -2,80 +2,93 @@
 
 ### High-Performance Backend-First Portfolio with Astral 3D Aesthetics
 
-**Astral Architect IO** is a modernized, professional portfolio designed for **Backend Developers**. Built on a high-performance **Django 5.0** monolith, it combines the robustness of a Python backend with a premium, glassmorphic UI and advanced WebGL animations.
+**Astral Architect IO** is a modernized, professional portfolio designed for **Backend Developers**. Built on a high-performance **Django 5.0** monolith, it combines a robust database-driven backend with a premium, glassmorphic UI and advanced WebGL animations.
 
 ---
 
-## ✨ Key Features
+## 🏗️ Project Structure & Architecture
 
-- **🚀 Astral System 3D Core**: A custom-built Three.js engine featuring a faceted Icosahedron orb, holographic wireframe overlays, and a dynamic 1,500-point particle nebula.
-- **👔 Backend-Focused Branding**: Tailored for professional backend identity with integrated SEO and institutional-grade aesthetics.
-- **📱 Glassmorphism UI**: A responsive, modern design built with **Tailwind CSS**, featuring dark-mode-first styling and smooth GSAP micro-animations.
-- **📂 Project Showcases**: Dynamic project grids with detailed tech stacks, feature lists, and live/source-code integration.
-- **⚡ Performance Optimized**: Minimal dependencies, optimized asset pipeline via Tailwind CLI, and cache-bypassing WebGL scripts.
+The project follows the standard Django monolith architecture with a focus on high-end frontend integration.
 
----
-
-## 🛠️ Technology Stack
-
-| Layer | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Backend** | Django 5.0 | Monolith application core |
-| **Frontend** | Django Templates / Vanilla JS | Structure and Logic |
-| **Styling** | Tailwind CSS (CLI) | Utility-first design system |
-| **3D Graphics** | Three.js (ES Modules) | Astral System WebGL visualizer |
-| **Animation** | GSAP / ScrollTrigger | Fluid UI transitions and micro-interactions |
-| **Icons** | Lucide | Professional stroke icon system |
-
----
-
-## 📡 Setup & Installation
-
-### Prerequisites
-- Python 3.11+
-- Node.js (Only for Tailwind CLI, optional if using pre-compiled CSS)
-
-### 1. Initialize Environment
-```powershell
-# Clone the repository
-git clone https://github.com/ragulhm/Portfolio-io___Ragul.git
-cd django_portfolio
-
-# Create and activate virtual environment
-python -m venv venv
-.\venv\Scripts\activate  # Windows
-source venv/bin/activate  # Linux/Mac
+```text
+django_portfolio/
+├── core/                   # Project Core Repository
+│   ├── settings.py         # Production Ready Settings (Dotenv, WhiteNoise)
+│   ├── urls.py             # Main Route Entry Point
+│   └── wsgi.py             # Server Entry (Gunicorn/Render)
+├── portfolio/              # Main Logic App
+│   ├── admin.py            # Dashboard Configuration for Models
+│   ├── models.py           # Database Schema (Project, Skill, Category)
+│   ├── urls.py             # App-level routing
+│   └── views.py            # Controller Logic (Database queries)
+├── static/                 # All Static Assets
+│   ├── css/
+│   │   └── output.css      # Compiled Tailwind CSS (Optimized)
+│   ├── js/
+│   │   └── three_scene.js  # The "Astral System" WebGL Code
+│   └── assets/             # Media and Static Files
+├── templates/              # Dynamic UI Layer
+│   ├── base.html           # Main Layout Wrapper
+│   └── portfolio/
+│       └── index.html      # Glassmorphic Homepage (Dynamic Data)
+├── build.sh                # Deployment Automation Script
+├── Procfile                # Production Process Manager
+├── django-distill/         # Configuration for Static Site Export
+└── requirements.txt        # Backend Dependencies
 ```
 
-### 2. Synchronize Dependencies
-```powershell
+---
+
+## 🛠️ Detailed Component Explanation
+
+### 1. The "Real" Backend (`portfolio/models.py`)
+Unlike simple static sites, this project features a full **Relational Database Backend**.
+- **`Project` Model**: Stores all your professional work. Includes support for custom grid spans (1, 2, or 3 columns) and JSON-based technology stacks.
+- **`SkillCategory` Model**: Organizes your skills into logical groups (e.g., "Languages", "Cloud") with custom icons and Tailwind gradients.
+- **`Skill` Model**: Individual skill nodes linked to categories via Foreign Keys.
+
+### 2. The Astral System (`static/js/three_scene.js`)
+The centerpiece of the UI is the **Astral System** – a custom WebGL visualizer:
+- **Core**: A faceted Icosahedron mesh rotating in 3D space.
+- **Nebula**: A particle field of 1,500 points with dynamic pulsing and parallax offset based on your mouse position.
+- **Hologram**: A wireframe shell that adds a futuristic "holographic" aesthetic.
+
+### 3. Production Readiness (`core/settings.py`)
+The project is "Launch Ready" out of the box:
+- **Environment Management**: Securely handles `SECRET_KEY` and `DEBUG` via a `.env` file.
+- **WhiteNoise Integration**: Serves static files efficiently in production environments like Render or Vercel.
+- **CSRF Protection**: Pre-configured trust for modern deployment platforms.
+
+---
+
+## 🚀 Setup & Installation
+
+### 1. Initialize Project
+```bash
+python -m venv venv
+.\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Database & Migrations
-```powershell
+### 2. Sync Database
+```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 4. Activation
-```powershell
-# Run the development server
+### 3. Launch Development Server
+```bash
 python manage.py runserver
 ```
-The application will be accessible at `http://127.0.0.1:8000/`.
 
 ---
 
-## 🏗️ Project Structure
+## 🔮 Deployment
 
-- `core/`: Project configuration and settings.
-- `portfolio/`: Main app containing views, models, and business logic.
-- `static/`:
-    - `js/three_scene.js`: The "Astral System" WebGL engine.
-    - `css/output.css`: Compiled Tailwind styles.
-- `templates/`: Django HTML templates with high-end modular structuring.
+This project supports two high-end deployment paths:
+1.  **Dynamic (Render/Local Server)**: Keeps the Django Backend alive. Every change in the Admin Panel is reflected instantly.
+2.  **Static (Netlify Export)**: Uses `django-distill` to "build" the site into plain HTML, making it 100% free to host on standard CDNs.
 
 ---
 
-**Status: [ACTIVE_DEVELOPMENT] | VERSION: 2.1.0 | OPERATOR: RAGUL M**
+**STATUS: [DYNAMIC_BACKEND_LIVE] | VERSION: 2.5.0 | OPERATOR: RAGUL M**
