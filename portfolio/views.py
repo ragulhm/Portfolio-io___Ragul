@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .models import Project, SkillCategory, BlogPost, BlogCategory
 from .forms import ContactForm
 from .github_api import GitHubAPI
+from .medium_api import MediumAPI
 
 def index(request):
     projects = Project.objects.all()
@@ -25,12 +26,17 @@ def index(request):
     github_api = GitHubAPI()
     github_activities = github_api.get_recent_activity()
 
+    # Fetch Medium Articles
+    medium_api = MediumAPI('ragul.mr3391')
+    medium_articles = medium_api.get_recent_articles()
+
     context = {
         'projects': projects,
         'skills': skills,
         'form': ContactForm(),
         'latest_posts': latest_posts,
-        'github_activities': github_activities
+        'github_activities': github_activities,
+        'medium_articles': medium_articles
     }
     return render(request, 'portfolio/index.html', context)
 

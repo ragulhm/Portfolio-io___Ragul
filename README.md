@@ -21,9 +21,11 @@ django_portfolio/
 │   └── wsgi.py             # Server Entry (Gunicorn/Render)
 ├── portfolio/              # Main Logic App
 │   ├── admin.py            # Dashboard Configuration for Models
-│   ├── models.py           # Database Schema (Project, Skill, Category)
+│   ├── models.py           # Database Schema (Project, Skill, Post, Inquiries)
+│   ├── github_api.py       # GitHub Live Pulse fetching utility
+│   ├── medium_api.py       # Medium RSS Feed extractor
 │   ├── urls.py             # App-level routing
-│   └── views.py            # Controller Logic (Database queries)
+│   └── views.py            # Controller Logic (Database queries & Forms)
 ├── static/                 # All Static Assets
 │   ├── css/
 │   │   └── output.css      # Compiled Tailwind CSS (Optimized)
@@ -47,16 +49,22 @@ django_portfolio/
 ### 1. The "Real" Backend (`portfolio/models.py`)
 Unlike simple static sites, this project features a full **Relational Database Backend**.
 - **`Project` Model**: Stores all your professional work. Includes support for custom grid spans (1, 2, or 3 columns) and JSON-based technology stacks.
-- **`SkillCategory` Model**: Organizes your skills into logical groups (e.g., "Languages", "Cloud") with custom icons and Tailwind gradients.
-- **`Skill` Model**: Individual skill nodes linked to categories via Foreign Keys.
+- **`SkillCategory` & `Skill`**: Organizes your skills into logical groups linked by Foreign Keys.
+- **`BlogPost` & `Category`**: Native Markdown-supported writing platform.
+- **`ContactInquiry`**: Safely stores async form submissions from the frontend.
 
-### 2. The Astral System (`static/js/three_scene.js`)
+### 2. Live API Integrations
+The portfolio is no longer static; it actively reaches out to external services.
+- **GitHub Pulse (`github_api.py`)**: Fetches your latest repository push events to prove continuous developer activity.
+- **Medium Sync (`medium_api.py`)**: Parses your public RSS feed (ignoring 1x1 tracking pixels) to beautifully render your latest articles directly on the homepage alongside your projects.
+
+### 3. The Astral System (`static/js/three_scene.js`)
 The centerpiece of the UI is the **Astral System** – a custom WebGL visualizer:
 - **Core**: A faceted Icosahedron mesh rotating in 3D space.
 - **Nebula**: A particle field of 1,500 points with dynamic pulsing and parallax offset based on your mouse position.
 - **Hologram**: A wireframe shell that adds a futuristic "holographic" aesthetic.
 
-### 3. Production Readiness (`core/settings.py`)
+### 4. Production Readiness (`core/settings.py`)
 The project is "Launch Ready" out of the box:
 - **Environment Management**: Securely handles `SECRET_KEY` and `DEBUG` via a `.env` file.
 - **WhiteNoise Integration**: Serves static files efficiently in production environments like Render or Vercel.
