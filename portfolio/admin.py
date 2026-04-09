@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, SkillCategory, Skill, ContactInquiry, BlogCategory, BlogPost
+from .models import Project, SkillCategory, Skill, ContactInquiry, BlogCategory, BlogPost, Achievement
 
 class SkillInline(admin.TabularInline):
     model = Skill
@@ -38,3 +38,10 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'published_at', 'is_published')
     list_filter = ('is_published', 'category')
     prepopulated_fields = {'slug': ('title',)}
+
+@admin.register(Achievement)
+class AchievementAdmin(admin.ModelAdmin):
+    list_display = ('title', 'issuer', 'category', 'date', 'order')
+    list_filter = ('category', 'issuer')
+    search_fields = ('title', 'issuer')
+    list_editable = ('order',)
