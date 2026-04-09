@@ -4,6 +4,9 @@
 
 **Astral Architect IO** is a modernized, professional portfolio designed for **Backend Developers**. Built on a high-performance **Django 5.0** monolith, it combines a robust database-driven backend with a premium, glassmorphic UI and advanced WebGL animations.
 
+> [!TIP]
+> **New to the project?** Read our in-depth [Technical Reference & Project Guide](file:///d:/Tech-stack/FastApi/Portfolio/astral-architect-io-main%20(1)/astral-architect-io-main/django_portfolio/PROJECT_GUIDE.md) for a deep dive into the 3D math and system architecture.
+
 ---
 
 ## 🏗️ Project Structure & Architecture
