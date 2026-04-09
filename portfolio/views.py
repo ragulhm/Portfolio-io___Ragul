@@ -1,5 +1,8 @@
-from django.shortcuts import render
-from .models import Project, SkillCategory
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from .models import Project, SkillCategory, BlogPost, BlogCategory
+from .forms import ContactForm
+from .github_api import GitHubAPI
 
 def index(request):
     projects = Project.objects.all()
@@ -15,8 +18,36 @@ def index(request):
             "items": [skill.name for skill in category.skills.all()]
         })
 
+    # Latest blog posts
+    latest_posts = BlogPost.objects.filter(is_published=True)[:3]
+
+    # Fetch GitHub Activity
+    github_api = GitHubAPI()
+    github_activities = github_api.get_recent_activity()
+
     context = {
         'projects': projects,
-        'skills': skills
+        'skills': skills,
+        'form': ContactForm(),
+        'latest_posts': latest_posts,
+        'github_activities': github_activities
     }
     return render(request, 'portfolio/index.html', context)
+
+def contact_submit(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success', 'message': 'Thank you! Your message has been sent.'})
+        return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+def blog_list(request):
+    posts = BlogPost.objects.filter(is_published=True)
+    categories = BlogCategory.objects.all()
+    return render(request, 'portfolio/blog_list.html', {'posts': posts, 'categories': categories})
+
+def blog_detail(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
+    return render(request, 'portfolio/blog_detail.html', {'post': post})
