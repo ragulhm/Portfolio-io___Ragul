@@ -9,7 +9,7 @@ class AstralOracle:
         api_key = getattr(settings, 'GOOGLE_API_KEY', os.environ.get('GOOGLE_API_KEY'))
         if api_key:
             self.client = genai.Client(api_key=api_key)
-            self.model_id = 'gemini-2.0-flash'
+            self.model_id = 'gemini-2.5-flash-lite'
         else:
             self.client = None
 
