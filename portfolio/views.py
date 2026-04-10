@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Project, SkillCategory, BlogPost, BlogCategory, Achievement
+from .models import Project, SkillCategory, BlogPost, BlogCategory
 from .forms import ContactForm
 from .github_api import GitHubAPI
 from .medium_api import MediumAPI
@@ -30,17 +30,13 @@ def index(request):
     medium_api = MediumAPI('ragul.mr3391')
     medium_articles = medium_api.get_recent_articles()
 
-    # Fetch Achievements/Certificates
-    achievements = Achievement.objects.all()
-
     context = {
         'projects': projects,
         'skills': skills,
         'form': ContactForm(),
         'latest_posts': latest_posts,
         'github_activities': github_activities,
-        'medium_articles': medium_articles,
-        'achievements': achievements
+        'medium_articles': medium_articles
     }
     return render(request, 'portfolio/index.html', context)
 

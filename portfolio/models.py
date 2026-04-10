@@ -99,18 +99,3 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
-
-class Achievement(models.Model):
-    title = models.CharField(max_length=200)
-    issuer = models.CharField(max_length=200)
-    date = models.DateField()
-    doc_file = models.FileField(upload_to='certificates/', help_text="The actual certificate (PDF or Image)")
-    badge_icon = models.ImageField(upload_to='achievements/badges/', blank=True, null=True, help_text="Sleek 3D icon for the gallery")
-    category = models.CharField(max_length=100, help_text="e.g., AI, CyberSecurity, Web Development")
-    order = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ['order', '-date']
-
-    def __str__(self):
-        return f"{self.title} - {self.issuer}"
