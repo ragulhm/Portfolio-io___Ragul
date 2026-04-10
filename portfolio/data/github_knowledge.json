@@ -1,0 +1,50 @@
+[
+  {
+    "name": "EDU-Planner-Multiagent-LLM",
+    "description": "An intelligent education planner powered by multi-agent Large Language Models (LLMs). It automates personalized learning paths and curriculum generation.",
+    "tech_stack": ["Python", "OpenAI", "LangChain", "Multi-Agent Architecture"],
+    "category": "AI & LLM",
+    "url": "https://github.com/ragulhm/EDU-Planner-Multiagent-LLM",
+    "impact": "Revolutionizes personalized learning by using AI agents to coordinate complex educational tasks."
+  },
+  {
+    "name": "Fine-Tuned-Understanding-Enhancing-Social-Bot-Detection",
+    "description": "A deep learning project focused on detecting social media bots through fine-tuned NLP models. It enhances the accuracy of identifying automated spam/coordinated behavior.",
+    "tech_stack": ["Python", "PyTorch", "HuggingFace", "Transformers", "NLP"],
+    "category": "Cybersecurity & AI",
+    "url": "https://github.com/ragulhm/Fine-Tuned-Understanding-Enhancing-Social-Bot-Detection-",
+    "impact": "Improves digital platform integrity by proactively identifying and neutralizing sophisticated bot networks."
+  },
+  {
+    "name": "Universal-AI-API-Agent",
+    "description": "A versatile full-stack agent designed for complex API automation and tool integration. It can interact with various external services to perform autonomous tasks.",
+    "tech_stack": ["JavaScript", "Node.js", "Express", "OpenAI API", "Automation"],
+    "category": "Full-Stack + AI",
+    "url": "https://github.com/ragulhm/Universal-AI-API-Agent",
+    "impact": "Bridges the gap between LLMs and real-world tools, allowing AI to perform practical, cross-platform actions."
+  },
+  {
+    "name": "AI_Study_Assistant-RAG",
+    "description": "A Retrieval-Augmented Generation (RAG) assistant built with Django for smart study assistance. It allows users to upload documents and ask questions based on their own knowledge base.",
+    "tech_stack": ["Python", "Django", "ChromaDB", "Gemini API", "RAG"],
+    "category": "Education & AI",
+    "url": "https://github.com/ragulhm/AI_Study_Assistant-RAG",
+    "impact": "Provides high-accuracy document-based answering, perfect for students managing large amounts of data."
+  },
+  {
+    "name": "Mern-chat-bot_Gemini",
+    "description": "A full-featured real-time chat bot integrated with Google's Gemini API, built on the MERN stack.",
+    "tech_stack": ["MongoDB", "Express", "React", "Node.js", "Gemini SDK"],
+    "category": "MERN Stack",
+    "url": "https://github.com/ragulhm/Mern-chat-bot_Gemini",
+    "impact": "Demonstrates high-level proficiency in modern JavaScript full-stack development and AI integration."
+  },
+  {
+    "name": "Plant-Analysis_tool__Gemini",
+    "description": "An AI-powered image analysis tool that identifies plant species and provides care recommendations using computer vision and Gemini.",
+    "tech_stack": ["HTML", "JavaScript", "Gemini Vision API", "Computer Vision"],
+    "category": "AI & Computer Vision",
+    "url": "https://github.com/ragulhm/Plant-Analysis_tool__Gemini",
+    "impact": "Utilizes multi-modal AI capabilities to solve real-world problems in botany and gardening."
+  }
+]

@@ -3,6 +3,8 @@
 
 {% block content %}
 <main class="relative z-10">
+<!-- Markdown Support for Quba -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -457,6 +459,269 @@
     </section>
 
 </main>
+
+<!-- Quba AI Assistant (Redesigned) -->
+<div id="quba-assistant" x-data="oracleChat()" class="oracle-fixed">
+    <!-- The Quba Orb -->
+    <div @click="toggle()" 
+         class="quba-orb"
+         x-show="!isOpen"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="scale-0 rotate-180"
+         x-transition:enter-end="scale-100 rotate-0">
+        <i data-lucide="sparkles" style="width: 24px; height: 24px; color: white;"></i>
+        <div style="position: absolute; bottom: 0; right: 0; width: 12px; height: 12px; background: #22c55e; border-radius: 50%; border: 2px solid #3b82f6;"></div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div x-show="isOpen" 
+         x-transition:enter="transition ease-out duration-500"
+         x-transition:enter-start="opacity-0 scale-95 translate-y-10"
+         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95 translate-y-10"
+         class="quba-panel">
+        
+        <!-- Header -->
+        <div style="padding: 24px; background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+                    <span style="color: white; font-weight: 900; font-size: 18px;">Q</span>
+                </div>
+                <div>
+                    <h3 style="color: white; font-weight: 700; font-size: 16px; margin: 0;">Quba Assistant</h3>
+                    <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                        <span class="quba-status"></span>
+                        <span style="font-size: 10px; color: #22c55e; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">AI Core Active</span>
+                    </div>
+                </div>
+            </div>
+            <button @click="toggle()" style="padding: 8px; border-radius: 10px; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); border: none; cursor: pointer;">
+                <i data-lucide="minus" style="width: 18px; height: 18px;"></i>
+            </button>
+        </div>
+
+        <!-- Messages -->
+        <div style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px;" id="chat-messages" class="scrollbar-hide">
+            <template x-for="msg in messages">
+                <div :style="msg.role === 'user' ? 'display: flex; justify-content: flex-end;' : 'display: flex; justify-content: flex-start;'">
+                    <div :class="msg.role === 'user' ? 'message-user' : 'message-ai'"
+                         style="max-width: 80%; padding: 14px 18px; font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <template x-if="msg.role === 'user'">
+                            <p x-text="msg.content" style="line-height: 1.6; margin: 0;"></p>
+                        </template>
+                        <template x-if="msg.role === 'assistant'">
+                            <div x-html="marked.parse(msg.content)" style="line-height: 1.6;"></div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            <div x-show="isLoading" style="display: flex; justify-content: flex-start;">
+                <div class="message-ai" style="padding: 12px 18px; display: flex; gap: 8px;">
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #64748b; animation: bounce 1.4s infinite ease-in-out;"></span>
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #64748b; animation: bounce 1.4s infinite ease-in-out 0.2s;"></span>
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #64748b; animation: bounce 1.4s infinite ease-in-out 0.4s;"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <form @submit.prevent="sendMessage()" style="padding: 20px 24px; background: rgba(255, 255, 255, 0.02); border-top: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="position: relative; display: flex; align-items: center; gap: 12px;">
+                <input type="text" x-model="userInput" placeholder="Synchronize query..." 
+                       style="flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 14px 16px; font-size: 14px; color: white; outline: none; transition: all 0.3s;"
+                       @focus="$el.style.borderColor = '#3b82f6'; $el.style.background = 'rgba(15, 23, 42, 0.8)'"
+                       @blur="$el.style.borderColor = 'rgba(255, 255, 255, 0.1)'; $el.style.background = 'rgba(15, 23, 42, 0.6)'"
+                       :disabled="isLoading">
+                <button type="submit" 
+                        style="width: 48px; height: 48px; border-radius: 14px; background: #3b82f6; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s;"
+                        :style="(!userInput.trim() || isLoading) ? 'opacity: 0.3; cursor: not-allowed;' : 'opacity: 1;'"
+                        :disabled="!userInput.trim() || isLoading">
+                    <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
+                </button>
+            </div>
+            <div style="display: flex; items-center; justify-content: center; gap: 8px; margin-top: 12px;">
+                <span style="font-size: 9px; color: rgba(255,255,255,0.15); letter-spacing: 0.1em; text-transform: uppercase;">Engineered by Quba Advanced AI</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .oracle-fixed {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 9999;
+    }
+
+    .quba-orb {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 0 20px rgba(139, 92, 246, 0.3);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+    }
+    
+    .quba-orb:hover {
+        transform: scale(1.1) translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 0 30px rgba(139, 92, 246, 0.5);
+    }
+
+    .quba-orb::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        padding: 2px;
+        background: linear-gradient(135deg, #3b82f6, #ec4899);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0.5;
+        animation: rotate 4s linear infinite;
+    }
+
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .quba-panel {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 380px;
+        height: 550px;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        transform-origin: bottom right;
+    }
+
+    .message-user {
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        color: white;
+        border-radius: 18px 18px 2px 18px;
+        align-self: flex-end;
+    }
+
+    .message-ai {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+        border-radius: 18px 18px 18px 2px;
+        align-self: flex-start;
+    }
+
+    .quba-status {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 10px #22c55e;
+    }
+
+    /* Markdown Styles */
+    .message-ai ul, .message-ai ol {
+        margin: 10px 0;
+        padding-left: 20px;
+    }
+    .message-ai li {
+        margin-bottom: 5px;
+    }
+    .message-ai p:last-child {
+        margin-bottom: 0;
+    }
+    .message-ai strong {
+        color: #60a5fa;
+        font-weight: 700;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<script>
+function oracleChat() {
+    return {
+        isOpen: false,
+        userInput: '',
+        isLoading: false,
+        messages: [
+            { role: 'assistant', content: 'Greetings. I am Quba AI Assistant, your dedicated interface for The Architect\'s portfolio. How may I assist you today?' }
+        ],
+        init() {
+            setTimeout(() => {
+                if (!this.isOpen) {
+                    this.toggle();
+                }
+            }, 3000);
+        },
+        toggle() {
+            this.isOpen = !this.isOpen;
+            if (this.isOpen) {
+                this.$nextTick(() => {
+                    const chat = document.getElementById('chat-messages');
+                    if (chat) chat.scrollTop = chat.scrollHeight;
+                });
+            }
+        },
+        async sendMessage() {
+            if (!this.userInput.trim() || this.isLoading) return;
+            
+            const question = this.userInput;
+            this.messages.push({ role: 'user', content: question });
+            this.userInput = '';
+            this.isLoading = true;
+            
+            this.$nextTick(() => {
+                const chat = document.getElementById('chat-messages');
+                if (chat) chat.scrollTop = chat.scrollHeight;
+            });
+
+            try {
+                const formData = new FormData();
+                formData.append('question', question);
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+                const response = await fetch('/ai/query/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    this.messages.push({ role: 'assistant', content: data.answer });
+                } else {
+                    this.messages.push({ role: 'assistant', content: 'Protocol error. Connection to the knowledge matrix was severed.' });
+                }
+            } catch (error) {
+                this.messages.push({ role: 'assistant', content: 'A gravitational anomaly interfered with the communication.' });
+            } finally {
+                this.isLoading = false;
+                this.$nextTick(() => {
+                    const chat = document.getElementById('chat-messages');
+                    if (chat) chat.scrollTop = chat.scrollHeight;
+                });
+            }
+        }
+    }
+}
+</script>
 {% endblock %}
 
 {% block scripts %}

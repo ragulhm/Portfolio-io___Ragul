@@ -4,6 +4,7 @@ from .models import Project, SkillCategory, BlogPost, BlogCategory
 from .forms import ContactForm
 from .github_api import GitHubAPI
 from .medium_api import MediumAPI
+from .ai_utils import AstralOracle
 
 def index(request):
     projects = Project.objects.all()
@@ -57,3 +58,15 @@ def blog_list(request):
 def blog_detail(request, slug):
     post = get_object_or_404(BlogPost, slug=slug, is_published=True)
     return render(request, 'portfolio/blog_detail.html', {'post': post})
+
+def ai_query(request):
+    if request.method == 'POST':
+        user_question = request.POST.get('question')
+        if not user_question:
+            return JsonResponse({'status': 'error', 'message': 'Say something...'}, status=400)
+            
+        oracle = AstralOracle()
+        answer = oracle.query(user_question)
+        return JsonResponse({'status': 'success', 'answer': answer})
+        
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)

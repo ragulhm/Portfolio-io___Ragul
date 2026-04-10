@@ -1,6 +1,6 @@
 # 🌌 Astral Architect IO - Portfolio System
 
-A high-performance, dark-mode-first developer portfolio built with **Django 5.0**, **Three.js**, and **GSAP**. This project focuses on high-end visual aesthetics (glassmorphism) and seamless integration with developer ecosystems like GitHub and Medium.
+A high-performance, developer portfolio built with **Django 5.0**, **Three.js**, and **Gemini 2.0 Flash**. This project features a cutting-edge **Quba AI Assistant** and seamless automation for GitHub and Medium integrations.
 
 ![Portfolio Preview](https://github.com/ragulhm/Portfolio-io___Ragul/raw/Django-Backend/static/images/hero_preview.webp)
 
@@ -8,63 +8,55 @@ A high-performance, dark-mode-first developer portfolio built with **Django 5.0*
 [astral-architect-io.onrender.com](https://astral-architect-io.onrender.com)
 
 ## ✨ Unique Features
-- **Astral System UI**: Premium glassmorphic interface with interactive 3D elements powered by Three.js.
-- **Medium Integration**: Automated blog ingestion via the Medium RSS API, showcasing latest articles.
-- **GitHub Pulse**: Real-time activity feed showing your most recent open-source contributions.
-- **Dynamic Projects**: Manage your portfolio projects and technical skills directly through the Django Admin.
-- **Bento Grid Layout**: Responsive project layout optimized for both desktop and mobile viewing.
+
+### 🤖 Quba AI Assistant (New)
+- **Premium AI Concierge**: Built with **Gemini 2.0 Flash** via the `google-genai` SDK.
+- **Context Aware**: Automatically analyzes your GitHub projects to suggest the best repositories to visitors.
+- **Structured Interaction**: Delivers structured, point-based answers with Markdown support for a high-end chat experience.
+- **Auto-Engagement**: Automatically opens after 3 seconds to greet new visitors.
+
+### 🎨 Design & Interaction
+- **Astral System UI**: Luxury glassmorphic interface with interactive 3D elements powered by Three.js.
+- **Motion Orchestration**: Seamless animations using GSAP and ScrollTrigger.
+- **Bento Grid Layout**: Modern, responsive masonry layout for project showcases.
+
+### ⚙️ Automation
+- **GitHub Pulse**: Real-time integration showcasing the latest commits and open-source activities.
+- **Medium Sync**: Automated blog ingestion via the Medium RSS API.
 
 ## 🛠️ Technology Stack
 - **Backend**: Django 5.0 (Python 3.11)
-- **Frontend**: Tailwind CSS, Alpine.js
-- **Animations**: GSAP (GreenSock Animation Platform), ScrollTrigger
-- **Graphics**: Three.js (WebGL Globe Integration), Lucide Icons
+- **AI Engine**: Google Gemini 2.0 Flash (`google-genai` SDK)
+- **Frontend**: Alpine.js, Tailwind CSS
+- **3D Graphics**: Three.js (WebGL Globe)
+- **Styling**: Vanilla CSS (Custom Glassmorphism Tokens)
 - **Deployment**: Render, Gunicorn, WhiteNoise
 
 ## 📦 Local Setup
 
-1. **Clone the project**
+1. **Clone and Install**
    ```bash
    git clone https://github.com/ragulhm/Portfolio-io___Ragul.git
    cd django_portfolio
-   ```
-
-2. **Setup Virtual Environment**
-   ```bash
    python -m venv venv
    source venv/bin/activate  # Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
-3. **Configure Environment**
-   Create a `.env` file based on `.env.example`:
+2. **Environment Variables**
+   Create a `.env` file:
    ```env
    SECRET_KEY=your_secret_key
    DEBUG=True
-   GITHUB_TOKEN=your_github_pat_token
-   MEDIUM_USERNAME=@your_username
+   GITHUB_TOKEN=your_github_pat
+   GOOGLE_API_KEY=your_gemini_api_key
    ```
 
-4. **Initialize Database**
+3. **Launch**
    ```bash
    python manage.py migrate
-   python populate_data.py  # Optional: Seed initial projects/skills
    python manage.py runserver
    ```
 
-## 🌐 Deployment (Render)
-This project is pre-configured for **Render** using a Blueprint (`render.yaml`).
-
-1. Connect your GitHub repository to Render.
-2. The `build.sh` script will automatically:
-   - Install dependencies.
-   - Run migrations.
-   - Collect static files.
-   - Ingest data from external APIs.
-3. Add the required **Environment Variables** in the Render dashboard.
-
 ## 🤝 Contributing
-Feel free to fork this project and submit PRs for any improvements!
-
----
-Developed by **[Ragul M](https://github.com/ragulhm)** - AI & MERN Stack Developer.
+Developed by **[Ragul M](https://github.com/ragulhm)** - AI & Python Developer.
