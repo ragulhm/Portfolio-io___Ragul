@@ -25,12 +25,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-only-for-local-dev-123456789')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,.onrender.com').split(',')]
+# Robust ALLOWED_HOSTS logic for Render and Local
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+env_hosts = os.environ.get('ALLOWED_HOSTS')
+if env_hosts:
+    ALLOWED_HOSTS.extend([h.strip() for h in env_hosts.split(',') if h.strip()])
+# Remove duplicates
+ALLOWED_HOSTS = list(set(ALLOWED_HOSTS))
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 
 
