@@ -108,8 +108,8 @@ def ingest():
         {
             "title": "Frameworks",
             "icon": "layers",
-            "items": ["React", "Express", "Flask", "Node.js"],
-            "gradient": "from-purple-500 to-fuchsia-500"
+            "items": ["Django","FastApi", "React", "Express", "Flask", "Node.js"],
+            "gradient": "from-purple-500 to-fuchsia-500"    
         },
         {
             "title": "Database & Cloud",
