@@ -282,7 +282,7 @@
                             <div class="absolute inset-0 bg-purple-500 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity"></div>
                             
                             {% if achievement.badge_icon %}
-                            <img src="{{ achievement.badge_icon.url }}" alt="{{ achievement.title }}" class="w-full h-full object-contain relative z-10 animate-float" style="animation-delay: 0.{{ forloop.counter }}s">
+                            <img src="{{ achievement.badge_icon.url }}" alt="{{ achievement.title }}" class="w-full h-full object-contain relative z-10 animate-float" style="animation-delay: {{ forloop.counter|mul:0.1 }}s">
                             {% else %}
                             <div class="w-full h-full flex items-center justify-center bg-white/5 rounded-full relative z-10">
                                 <i data-lucide="award" class="w-10 h-10 text-purple-400"></i>
