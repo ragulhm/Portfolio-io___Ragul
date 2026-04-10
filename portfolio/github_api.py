@@ -6,9 +6,11 @@ class GitHubAPI:
     def __init__(self):
         self.username = 'ragulhm'
         self.base_url = 'https://api.github.com'
-        # Optional: Add GitHub token from .env for higher rate limits
-        # self.headers = {'Authorization': f'token {settings.GITHUB_TOKEN}'}
         self.headers = {'Accept': 'application/vnd.github.v3+json'}
+        
+        # Add GitHub token from settings for higher rate limits
+        if hasattr(settings, 'GITHUB_TOKEN') and settings.GITHUB_TOKEN:
+            self.headers['Authorization'] = f'token {settings.GITHUB_TOKEN}'
 
     def get_recent_activity(self):
         """Fetch the most recent public events for the user."""

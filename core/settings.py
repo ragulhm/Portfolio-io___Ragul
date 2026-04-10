@@ -31,6 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-ta=dmj#uohp44iirmo7-6
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 
 
 # Application definition
@@ -131,6 +132,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # WhiteNoise storage to handle compression and caching
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
 
 # CSRF Trusted Origins for deployment
 CSRF_TRUSTED_ORIGINS = [
@@ -138,6 +140,16 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
 ]
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000 # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

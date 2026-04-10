@@ -1,105 +1,70 @@
-# 🌌 Astral Architect IO - Django Portfolio
+# 🌌 Astral Architect IO - Portfolio System
 
-### High-Performance Backend-First Portfolio with Astral 3D Aesthetics
+A high-performance, dark-mode-first developer portfolio built with **Django 5.0**, **Three.js**, and **GSAP**. This project focuses on high-end visual aesthetics (glassmorphism) and seamless integration with developer ecosystems like GitHub and Medium.
 
-**Astral Architect IO** is a modernized, professional portfolio designed for **Backend Developers**. Built on a high-performance **Django 5.0** monolith, it combines a robust database-driven backend with a premium, glassmorphic UI and advanced WebGL animations.
+![Portfolio Preview](https://github.com/ragulhm/Portfolio-io___Ragul/raw/Django-Backend/static/images/hero_preview.webp)
 
-> [!TIP]
-> **New to the project?** Read our in-depth [Technical Reference & Project Guide](file:///d:/Tech-stack/FastApi/Portfolio/astral-architect-io-main%20(1)/astral-architect-io-main/django_portfolio/PROJECT_GUIDE.md) for a deep dive into the 3D math and system architecture.
+## 🚀 Live Demo
+[astral-architect-io.onrender.com](https://astral-architect-io.onrender.com)
 
----
+## ✨ Unique Features
+- **Astral System UI**: Premium glassmorphic interface with interactive 3D elements powered by Three.js.
+- **Medium Integration**: Automated blog ingestion via the Medium RSS API, showcasing latest articles.
+- **GitHub Pulse**: Real-time activity feed showing your most recent open-source contributions.
+- **Dynamic Projects**: Manage your portfolio projects and technical skills directly through the Django Admin.
+- **Bento Grid Layout**: Responsive project layout optimized for both desktop and mobile viewing.
 
-## 🏗️ Project Structure & Architecture
+## 🛠️ Technology Stack
+- **Backend**: Django 5.0 (Python 3.11)
+- **Frontend**: Tailwind CSS, Alpine.js
+- **Animations**: GSAP (GreenSock Animation Platform), ScrollTrigger
+- **Graphics**: Three.js (WebGL Globe Integration), Lucide Icons
+- **Deployment**: Render, Gunicorn, WhiteNoise
 
-The project follows the standard Django monolith architecture with a focus on high-end frontend integration.
+## 📦 Local Setup
 
-```text
-django_portfolio/
-├── core/                   # Project Core Repository
-│   ├── settings.py         # Production Ready Settings (Dotenv, WhiteNoise)
-│   ├── urls.py             # Main Route Entry Point
-│   └── wsgi.py             # Server Entry (Gunicorn/Render)
-├── portfolio/              # Main Logic App
-│   ├── admin.py            # Dashboard Configuration for Models
-│   ├── models.py           # Database Schema (Project, Skill, Post, Inquiries)
-│   ├── github_api.py       # GitHub Live Pulse fetching utility
-│   ├── medium_api.py       # Medium RSS Feed extractor
-│   ├── urls.py             # App-level routing
-│   └── views.py            # Controller Logic (Database queries & Forms)
-├── static/                 # All Static Assets
-│   ├── css/
-│   │   └── output.css      # Compiled Tailwind CSS (Optimized)
-│   ├── js/
-│   │   └── three_scene.js  # The "Astral System" WebGL Code
-│   └── assets/             # Media and Static Files
-├── templates/              # Dynamic UI Layer
-│   ├── base.html           # Main Layout Wrapper
-│   └── portfolio/
-│       └── index.html      # Glassmorphic Homepage (Dynamic Data)
-├── build.sh                # Deployment Automation Script
-├── Procfile                # Production Process Manager
-├── django-distill/         # Configuration for Static Site Export
-└── requirements.txt        # Backend Dependencies
-```
+1. **Clone the project**
+   ```bash
+   git clone https://github.com/ragulhm/Portfolio-io___Ragul.git
+   cd django_portfolio
+   ```
 
----
+2. **Setup Virtual Environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
 
-## 🛠️ Detailed Component Explanation
+3. **Configure Environment**
+   Create a `.env` file based on `.env.example`:
+   ```env
+   SECRET_KEY=your_secret_key
+   DEBUG=True
+   GITHUB_TOKEN=your_github_pat_token
+   MEDIUM_USERNAME=@your_username
+   ```
 
-### 1. The "Real" Backend (`portfolio/models.py`)
-Unlike simple static sites, this project features a full **Relational Database Backend**.
-- **`Project` Model**: Stores all your professional work. Includes support for custom grid spans (1, 2, or 3 columns) and JSON-based technology stacks.
-- **`SkillCategory` & `Skill`**: Organizes your skills into logical groups linked by Foreign Keys.
-- **`BlogPost` & `Category`**: Native Markdown-supported writing platform.
-- **`ContactInquiry`**: Safely stores async form submissions from the frontend.
+4. **Initialize Database**
+   ```bash
+   python manage.py migrate
+   python populate_data.py  # Optional: Seed initial projects/skills
+   python manage.py runserver
+   ```
 
-### 2. Live API Integrations
-The portfolio is no longer static; it actively reaches out to external services.
-- **GitHub Pulse (`github_api.py`)**: Fetches your latest repository push events to prove continuous developer activity.
-- **Medium Sync (`medium_api.py`)**: Parses your public RSS feed (ignoring 1x1 tracking pixels) to beautifully render your latest articles directly on the homepage alongside your projects.
+## 🌐 Deployment (Render)
+This project is pre-configured for **Render** using a Blueprint (`render.yaml`).
 
-### 3. The Astral System (`static/js/three_scene.js`)
-The centerpiece of the UI is the **Astral System** – a custom WebGL visualizer:
-- **Core**: A faceted Icosahedron mesh rotating in 3D space.
-- **Nebula**: A particle field of 1,500 points with dynamic pulsing and parallax offset based on your mouse position.
-- **Hologram**: A wireframe shell that adds a futuristic "holographic" aesthetic.
+1. Connect your GitHub repository to Render.
+2. The `build.sh` script will automatically:
+   - Install dependencies.
+   - Run migrations.
+   - Collect static files.
+   - Ingest data from external APIs.
+3. Add the required **Environment Variables** in the Render dashboard.
 
-### 4. Production Readiness (`core/settings.py`)
-The project is "Launch Ready" out of the box:
-- **Environment Management**: Securely handles `SECRET_KEY` and `DEBUG` via a `.env` file.
-- **WhiteNoise Integration**: Serves static files efficiently in production environments like Render or Vercel.
-- **CSRF Protection**: Pre-configured trust for modern deployment platforms.
+## 🤝 Contributing
+Feel free to fork this project and submit PRs for any improvements!
 
 ---
-
-## 🚀 Setup & Installation
-
-### 1. Initialize Project
-```bash
-python -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### 2. Sync Database
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### 3. Launch Development Server
-```bash
-python manage.py runserver
-```
-
----
-
-## 🔮 Deployment
-
-This project supports two high-end deployment paths:
-1.  **Dynamic (Render/Local Server)**: Keeps the Django Backend alive. Every change in the Admin Panel is reflected instantly.
-2.  **Static (Netlify Export)**: Uses `django-distill` to "build" the site into plain HTML, making it 100% free to host on standard CDNs.
-
----
-
-**STATUS: [DYNAMIC_BACKEND_LIVE] | VERSION: 2.5.0 | OPERATOR: RAGUL M**
+Developed by **[Ragul M](https://github.com/ragulhm)** - AI & MERN Stack Developer.
