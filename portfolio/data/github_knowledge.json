@@ -3,9 +3,9 @@
     "name": "News_Stack_Analysis_System",
     "description": "Fastapi",
     "tech_stack": [
-      "HTML",
-      "JavaScript",
       "Python",
+      "JavaScript",
+      "HTML",
       "CSS"
     ],
     "category": "Innovative Development",
@@ -19,8 +19,8 @@
     "name": "Fastapi",
     "description": "Python",
     "tech_stack": [
-      "HTML",
       "Python",
+      "HTML",
       "CSS"
     ],
     "category": "Innovative Development",
@@ -72,10 +72,10 @@
     "description": "A specialized software solution developed by Ragul.",
     "tech_stack": [
       "HTML",
-      "JavaScript",
-      "CSS",
       "Dockerfile",
-      "Python"
+      "CSS",
+      "Python",
+      "JavaScript"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/Fine-Tuned-Understanding-Enhancing-Social-Bot-Detection-",
@@ -103,10 +103,10 @@
     "description": "Python_Django",
     "tech_stack": [
       "HTML",
-      "JavaScript",
-      "CSS",
       "Dockerfile",
-      "Python"
+      "CSS",
+      "Python",
+      "JavaScript"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/AI_Study_Assistant-RAG",
@@ -119,8 +119,8 @@
     "name": "glow-render-space",
     "description": "A specialized software solution developed by Ragul.",
     "tech_stack": [
-      "HTML",
       "JavaScript",
+      "HTML",
       "CSS",
       "TypeScript"
     ],
@@ -136,13 +136,13 @@
     "description": "A specialized software solution developed by Ragul.",
     "tech_stack": [
       "HTML",
-      "Kotlin",
       "C++",
-      "C",
+      "Kotlin",
+      "CMake",
       "Objective-C",
       "Swift",
-      "CMake",
-      "Dart"
+      "Dart",
+      "C"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/Train-Booking-app___Flutter-",
@@ -155,10 +155,10 @@
     "name": "EDU-Planner-Multiagent-LLM",
     "description": "A specialized software solution developed by Ragul.",
     "tech_stack": [
-      "JavaScript",
       "Python",
-      "CSS",
-      "HTML"
+      "JavaScript",
+      "HTML",
+      "CSS"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/EDU-Planner-Multiagent-LLM",
@@ -171,8 +171,8 @@
     "name": "Plant-Analysis_tool__Gemini",
     "description": "Ai Project",
     "tech_stack": [
-      "HTML",
-      "JavaScript"
+      "JavaScript",
+      "HTML"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/Plant-Analysis_tool__Gemini",
@@ -199,8 +199,8 @@
     "description": "Portfolio",
     "tech_stack": [
       "JavaScript",
-      "CSS",
-      "HTML"
+      "HTML",
+      "CSS"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/React_Basic",
@@ -249,8 +249,8 @@
     "description": "Mern_stack",
     "tech_stack": [
       "JavaScript",
-      "CSS",
-      "HTML"
+      "HTML",
+      "CSS"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/Mern-chat-bot_Gemini",
@@ -264,10 +264,10 @@
     "description": "A specialized software solution developed by Ragul.",
     "tech_stack": [
       "HTML",
-      "JavaScript",
-      "CSS",
       "TypeScript",
-      "PLpgSQL"
+      "CSS",
+      "PLpgSQL",
+      "JavaScript"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/creative-vault-app",
@@ -281,8 +281,8 @@
     "description": "A specialized software solution developed by Ragul.",
     "tech_stack": [
       "JavaScript",
-      "CSS",
-      "HTML"
+      "HTML",
+      "CSS"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/Node.js",
@@ -295,8 +295,8 @@
     "name": "Java_script",
     "description": "AI",
     "tech_stack": [
-      "HTML",
       "JavaScript",
+      "HTML",
       "CSS"
     ],
     "category": "Innovative Development",
@@ -310,8 +310,8 @@
     "name": "MERN_Stack-Projects",
     "description": "Mern-Stack",
     "tech_stack": [
-      "HTML",
       "JavaScript",
+      "HTML",
       "TypeScript"
     ],
     "category": "Innovative Development",
@@ -336,13 +336,13 @@
     "name": "Mini-Project_Frontend",
     "description": "LLM",
     "tech_stack": [
-      "PowerShell",
       "HTML",
-      "JavaScript",
-      "CSS",
       "Batchfile",
+      "CSS",
+      "Python",
       "C",
-      "Python"
+      "JavaScript",
+      "PowerShell"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/Mini-Project_Frontend",
@@ -380,13 +380,13 @@
     "name": "llama-vs-deepseek",
     "description": "LLM",
     "tech_stack": [
-      "PowerShell",
-      "Roff",
       "HTML",
-      "JavaScript",
-      "CSS",
       "Batchfile",
-      "Python"
+      "CSS",
+      "Python",
+      "JavaScript",
+      "PowerShell",
+      "Roff"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/llama-vs-deepseek",
@@ -399,16 +399,16 @@
     "name": "AI_Project",
     "description": "LLM",
     "tech_stack": [
-      "PowerShell",
-      "JavaScript",
-      "Roff",
       "HTML",
-      "CSS",
-      "Lua",
       "Batchfile",
+      "CSS",
+      "Python",
+      "Lua",
       "C",
-      "Shell",
-      "Python"
+      "JavaScript",
+      "PowerShell",
+      "Roff",
+      "Shell"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/AI_Project",
@@ -422,8 +422,8 @@
     "description": "Mern_stack",
     "tech_stack": [
       "JavaScript",
-      "CSS",
-      "HTML"
+      "HTML",
+      "CSS"
     ],
     "category": "Innovative Development",
     "url": "https://github.com/ragulhm/Chat_app-Frontend",

@@ -13,10 +13,9 @@ class MediumAPI:
         try:
             feed = feedparser.parse(self.rss_url)
             
-            if feed.bozo:
-                print(f"Error parsing Medium feed for {self.rss_url}")
-                return []
-                
+            # Medium sometimes throws minor XML namespace errors which triggers bozo=1.
+            # We ignore bozo and parse entries anyway because feedparser recovers gracefully.
+            
             entries = feed.entries[:limit]
             articles = []
             

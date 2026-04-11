@@ -1,6 +1,6 @@
 # 🌌 Astral Architect IO - Portfolio System
 
-A high-performance, developer portfolio built with **Django 5.0**, **Three.js**, and **Gemini 2.0 Flash**. This project features a cutting-edge **Quba AI Assistant** and seamless automation for GitHub and Medium integrations.
+A high-performance, developer portfolio built with **Django 5.0**, **Three.js**, and **Gemini 2.5 Flash**. This project features a cutting-edge **Spatial 3D Holographic UI**, a **Quba AI Assistant**, and seamless automation for GitHub and Medium integrations.
 
 ![Portfolio Preview](https://github.com/ragulhm/Portfolio-io___Ragul/raw/Django-Backend/static/images/hero_preview.webp)
 
@@ -16,9 +16,10 @@ A high-performance, developer portfolio built with **Django 5.0**, **Three.js**,
 - **Auto-Engagement**: Automatically opens after 3 seconds to greet new visitors.
 
 ### 🎨 Design & Interaction
-- **Astral System UI**: Luxury glassmorphic interface with interactive 3D elements powered by Three.js.
-- **Motion Orchestration**: Seamless animations using GSAP and ScrollTrigger.
-- **Bento Grid Layout**: Modern, responsive masonry layout for project showcases.
+- **Spatial 3D Aesthetic**: High-end, VisionOS-inspired floating glass cards and deep layered backdrop blurs (`blur-50px`).
+- **Holographic Gradients**: Fluid cyan-to-violet meshes, extreme translucent bevels (1px borders), and Z-axis lift effects.
+- **Motion Orchestration**: Seamless 3D depth-based transitions leveraging GSAP and ScrollTrigger.
+- **Quba Neural Terminal**: Interactive, premium terminal with continuous glowing pulse effects.
 
 ### ⚙️ Automation
 - **GitHub Pulse**: Real-time integration showcasing the latest commits and open-source activities.
