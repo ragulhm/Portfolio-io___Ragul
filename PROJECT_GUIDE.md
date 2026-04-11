@@ -1,7 +1,7 @@
 # 📗 Astral Architect IO: Technical Reference & Project Guide
 
 ## 1. Executive Project Review
-**Astral Architect IO** has evolved from a dynamic portfolio into an **Intelligent Monolith**. By integrating **Django 5.0** with **Google Gemini 2.5**, the project now features a real-time "Knowledge Matrix" that aggregates global activity from GitHub and Medium to provide an interactive, AI-driven experience for visitors and recruiters.
+**Astral Architect IO** has evolved from a dynamic portfolio into an **Intelligent Monolith**. By integrating **Django 5.0** with **Google Gemini 2.0**, the project now features a real-time "Knowledge Matrix" that aggregates global activity from GitHub and Medium to provide an interactive, AI-driven experience for visitors and recruiters.
 
 ### Key Strengths:
 - **Intelligent Assistant**: Features "Quba", a custom-tuned AI concierge that leverages a localized knowledge base of ~30+ repositories to answer technical queries.

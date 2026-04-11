@@ -4,7 +4,7 @@ set -o errexit
 
 pip install -r requirements.txt
 
-python manage.py collectstatic --no-input
-python manage.py migrate
-python portfolio/scripts/extract_knowledge.py
-python ingest_data.py
+PYTHONPATH=. python manage.py collectstatic --no-input
+PYTHONPATH=. python manage.py migrate
+PYTHONPATH=. python portfolio/scripts/extract_knowledge.py
+PYTHONPATH=. python ingest_data.py

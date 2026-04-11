@@ -2,9 +2,12 @@ import os
 import requests
 import json
 import django
+import sys
 from datetime import datetime
 
 # Setup Django environment
+# Add the project root to sys.path so it can find the 'core' module
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
