@@ -5,12 +5,12 @@ A high-performance, developer portfolio built with **Django 5.0**, **Three.js**,
 ![Portfolio Preview](https://github.com/ragulhm/Portfolio-io___Ragul/raw/Django-Backend/static/images/hero_preview.webp)
 
 ## 🚀 Live Demo
-[astral-architect-io.onrender.com](https://astral-architect-io.onrender.com)
+[astral-architect-io.onrender.com]([https://astral-architect-io.onrender.com](https://portfolio-io-ragul.onrender.com/))
 
 ## ✨ Unique Features
 
 ### 🤖 Quba AI Assistant (New)
-- **Premium AI Concierge**: Built with **Gemini 2.0 Flash** via the `google-genai` SDK.
+- **Premium AI Concierge**: Built with **Gemini-2.5-flash-lite** via the `google-genai` SDK.
 - **Context Aware**: Automatically analyzes your GitHub projects to suggest the best repositories to visitors.
 - **Structured Interaction**: Delivers structured, point-based answers with Markdown support for a high-end chat experience.
 - **Auto-Engagement**: Automatically opens after 3 seconds to greet new visitors.
