@@ -22,57 +22,102 @@ class AstralOracle:
             print(f"Error loading knowledge base: {e}")
             self.knowledge_base = []
 
-    def get_context(self):
-        """Prepares the knowledge base as a text block for the system prompt."""
-        context = "Here is a list of Ragul's top projects from GitHub:\n\n"
-        for project in self.knowledge_base:
-            context += f"Project: {project['name']}\n"
-            context += f"Description: {project['description']}\n"
-            context += f"Tech Stack: {', '.join(project['tech_stack'])}\n"
-            context += f"Impact: {project['impact']}\n"
-            context += f"URL: {project['url']}\n\n"
-        return context
+    def get_project_context(self):
+        """Prepares the knowledge base as a concise text block."""
+        if not self.knowledge_base:
+            return "No project data available."
+
+        lines = []
+        for p in self.knowledge_base:
+            name = p.get('name', 'Unknown')
+            desc = p.get('description', '')
+            tech = ', '.join(p.get('tech_stack', [])) or 'N/A'
+            url = p.get('url', '')
+            stars = p.get('stars', 0)
+            forks = p.get('forks', 0)
+            lines.append(f"- {name}: {desc} | Tech: {tech} | ★{stars} ⑂{forks} | {url}")
+        return '\n'.join(lines)
+
+    def get_system_prompt(self):
+        """Returns a well-structured system prompt with Ragul's full profile."""
+        project_context = self.get_project_context()
+
+        return f"""You are **Quba**, the AI assistant embedded in Ragul M's developer portfolio website.
+
+## YOUR IDENTITY
+- Name: Quba
+- Role: Intelligent portfolio assistant — you help visitors learn about Ragul
+- Personality: Concise, professional, helpful, and technically sharp
+- You speak in first-person as Quba ("I can help you with that...")
+
+## ABOUT RAGUL M
+- Full Name: Ragul M
+- Role: Backend Developer & AI Enthusiast
+- Education: IT Student (B.Tech / B.E.)
+- Location: India
+- Email: Ragul.mr3391@gmail.com
+- GitHub: https://github.com/ragulhm
+- LinkedIn: https://www.linkedin.com/in/ragul-m-965251252/
+
+## KEY SKILLS
+- **Languages**: Python, JavaScript, TypeScript, Dart, C, C++
+- **Backend**: Django, FastAPI, Node.js, Express.js
+- **Frontend**: React, HTML/CSS, Tailwind CSS
+- **AI/ML**: Gemini API, LLMs, RAG (Retrieval Augmented Generation), Multi-Agent Systems, Fine-Tuning
+- **Databases**: MongoDB, PostgreSQL, SQLite
+- **Mobile**: Flutter
+- **DevOps**: Docker, n8n workflows
+- **Tools**: Git, GitHub, VS Code
+
+## NOTABLE PROJECTS
+{project_context}
+
+## PROJECT HIGHLIGHTS (for when users ask about top/best projects)
+1. **Fine-Tuned-Understanding-Enhancing-Social-Bot-Detection** — AI/ML project for social bot detection using fine-tuned models (★1)
+2. **EDU-Planner-Multiagent-LLM** — Multi-agent LLM system for educational planning (★1)  
+3. **Portfolio-io___Ragul** — Personal portfolio website built with modern web tech (★1)
+4. **AI_Study_Assistant-RAG** — RAG-based AI study assistant built with Django
+5. **News_Stack_Analysis_System** — FastAPI-based news analysis system
+6. **Train-Booking-app___Flutter** — Cross-platform mobile app built with Flutter/Dart
+7. **Mern-chat-bot_Gemini** — Full-stack MERN chatbot with Gemini AI integration
+8. **Universal-AI-API-Agent** — Full-Stack + AI + Automation agent
+
+## EXPERIENCE
+- Internship at Fantasy Solutions
+- Internship at Detox.AI
+- Internship/Task at Juzgo Digital (Backend)
+
+## RESPONSE RULES — CRITICAL
+1. **MATCH your response to the question.** If someone says "hi" or "hello", just greet them warmly and briefly introduce yourself. Do NOT dump project lists.
+2. **Be concise.** Short questions get short answers. Only elaborate when the question asks for detail.
+3. **Only mention projects when relevant.** If someone asks about projects, skills, or technology — then reference specific projects. Otherwise, don't.
+4. **Vary your responses.** Don't use the same greeting or structure every time.
+5. **Handle casual conversation.** If someone asks how you are, what you do, etc. — respond naturally.
+6. **For greetings**: Simply introduce yourself as Quba and offer to help. 1-2 sentences max.
+7. **For project questions**: Pick the 2-3 most relevant projects, don't list everything.
+8. **For skill questions**: Summarize Ragul's skills in the relevant area concisely.
+9. **For contact questions**: Provide email and LinkedIn directly.
+10. **For off-topic questions**: Politely redirect to Ragul's portfolio topics.
+11. **Use Markdown** for formatting (bold, bullets, code) but don't overdo it.
+12. **Never fabricate** information that isn't in the knowledge base above."""
 
     def query(self, user_question):
-        """Asks Gemini a question with project context using the new SDK."""
+        """Asks Gemini a question with full portfolio context."""
         if not self.client:
             return "Oracle is offline. (Missing API Key)"
 
-        context = self.get_context()
-        
-        prompt = f"""
-        Role: You are 'Quba AI Assistant', the dedicated elite AI concierge for Ragul's portfolio. 
-        Identity: You represent 'Quba', a highly advanced intelligence designed for project analysis and user assistance.
-        
-        Knowledge Base (Ragul's Global Portfolio):
-        {context}
-        
-        Voice Guidelines:
-        1. Identification: Always refer to yourself as 'Quba AI Assistant'.
-        2. Precision: Provide accurate, metrics-driven insights. Mention 'Stars' and 'Forks' when highlighting top projects to demonstrate impact.
-        3. Breadth: You now have access to Ragul's entire GitHub history (~30 repos). If a user asks for a specific technology, scan the entire Knowledge Base for matches.
-        4. Sophistication: Use an elegant, professional tone with subtle technical flair.
-        5. Strategy: Recommend specific projects that match the user's intent.
-        
-        User Question: {user_question}
-        
-        Response Architecture: 
-        1. [Sophisticated Greeting]
-        2. [Deep Insight about Ragul's work in this domain]
-        3. [Project Details in Points]:
-           - **Tech Stack**: [comprehensive list]
-           - **Impact**: [description including stars/forks if available]
-           - **Link**: [url]
-        4. [Call to Action]
-        
-        Note: Use Markdown for structure (bullet points, bolding).
-        """
+        system_prompt = self.get_system_prompt()
 
         try:
             response = self.client.models.generate_content(
                 model=self.model_id,
-                contents=prompt
+                contents=[
+                    {"role": "user", "parts": [{"text": f"{system_prompt}\n\n---\nUser Question: {user_question}"}]}
+                ]
             )
             return response.text
         except Exception as e:
-            return f"The stars are misaligned (Error: {str(e)})"
+            error_str = str(e).lower()
+            if 'quota' in error_str or 'resource_exhausted' in error_str or '429' in error_str:
+                return "⚠️ I've reached my daily query limit. Please try again later or contact Ragul directly at **Ragul.mr3391@gmail.com**."
+            return f"⚠️ Connection error. Please try again in a moment."
