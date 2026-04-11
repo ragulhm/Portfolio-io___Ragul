@@ -33,6 +33,15 @@ A high-performance, developer portfolio built with **Django 5.0**, **Three.js**,
 - **Styling**: Vanilla CSS (Custom Glassmorphism Tokens)
 - **Deployment**: Render, Gunicorn, WhiteNoise
 
+## 🏗 Architecture & System Design
+The portfolio employs a high-performance, monolithic Python architecture designed to eliminate the overhead of Javascript runtimes (like Node.js) while maintaining a deeply interactive "Spatial 3D" interface.
+
+- **Core Application Server (Django Monolith)**: Powered by Django 5.0, it handles all routing, database management (SQLite), and Server-Side Rendering (SSR). This eliminates client-side loading states for pure SEO visibility and immediate content delivery.
+- **Automated Data Ingestion Loop**: Included scripts (`ingest_data.py` and `extract_knowledge.py`) automatically fetch data from GitHub (Commits/PRs) and Medium (RSS feeds) via cron or build-time commands.
+- **AI Intelligence Layer (Google Gemini)**: Utilizing the `google-genai` SDK, the server dynamically proxies intelligence chat requests directly to a persistent Gemini 2.5 Flash model pre-seeded with local GitHub repository intelligence logs.
+- **Lightweight State & Motion**: Instead of React or Vue, the client-side leverages **Alpine.js** for reactive data mapping alongside **GSAP** and **Three.js** for hardware-accelerated scroll animations and 3D globe visualizations.
+- **Production Asset Pipeline**: The deployment is perfectly orchestrated for Render (`render.yaml`). A custom `build.sh` script handles package installation, `collectstatic`, and database migrations natively in the Render container, utilizing **WhiteNoise** for heavily compressed static asset delivery.
+
 ## 📦 Local Setup
 
 1. **Clone and Install**
