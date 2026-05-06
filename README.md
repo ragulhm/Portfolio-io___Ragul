@@ -81,4 +81,3 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 ---
 Built with ❤️ by [Ragul M](https://github.com/ragulhm)
->>>>>>> 1824fc1 
