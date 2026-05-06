@@ -81,4 +81,4 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 ---
 Built with ❤️ by [Ragul M](https://github.com/ragulhm)
->>>>>>> 1824fc1 (docs: upgrade README.md with new tech s
+>>>>>>> 1824fc1 (docs: upgrade README.md 
